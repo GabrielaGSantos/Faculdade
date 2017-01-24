@@ -8,8 +8,8 @@
 #define MULT 30
 
 
-void espalhamento(char file[SIZE_CHAR]);
-void ppm(char imagem[SIZE_CHAR]);
+void espalhamento(char file[SIZE_CHAR], MatrixHash *list);
+void ppm(char *imagem, MatrixHash *matrix);
 
 void main() {
 	int lista;
@@ -19,41 +19,41 @@ void main() {
 	printf("\n2: palavras-portugues\n");
 	scanf("%d", &lista);
 	
+	MatrixHash list; 
+  	init(&list);
+  	
 	switch(lista){
 		case 1:
-			espalhamento("palavras-ingles.txt");
+			espalhamento("palavras-ingles.txt", &list);
 			printf("\nCriando arquivo ppm\n");
-			ppm("Imagem-ingles");
+			ppm("Imagem-ingles", &list);
 			break;
 		case 2:
-			espalhamento("palavras-portugues.txt");
+			espalhamento("palavras-portugues.txt", &list);
 			printf("\nCriando arquivo ppm\n");
-			ppm("Imagem-portugues");
+			ppm("Imagem-portugues", &list);
 			break;
 	}
 	
 
 }
 
-void espalhamento(char file[SIZE_CHAR]){
+void espalhamento(char file[SIZE_CHAR], MatrixHash *list){
 	FILE *arquivo;
 	
-	MatrixHash list; 
-  	init(&list);
-  	
 	arquivo = fopen(file, "r");
 	if(arquivo == NULL) printf("\nERRO!!!");
 	else{
 		char word[SIZE_CHAR];
 		while(fgets(word, SIZE_CHAR, arquivo) != NULL){
-			add(&list, word);
+			add(list, word);
 		}
 	}	
 	fclose(arquivo);
 	
 }
 
-void ppm(char imagem[SIZE_CHAR]){
+void ppm(char *imagem, MatrixHash *matrix){
 	int i, j, k, w; //contadores
 	
 	strcat(imagem, ".ppm");
@@ -67,7 +67,13 @@ void ppm(char imagem[SIZE_CHAR]){
 		fprintf(img, "\n%d\n", 255);
 		
 		for(i=0; i<MATRIX; i++){
-			
+			for(k=0; k<MULT; k++){
+				for(j=0; j<MATRIX; j++){
+					for(w=0; w< MULT; w++){
+						fprintf(img, "%d %d %d ", 255, 10 ,255);
+					}
+				} fprintf(img, "\n");
+			}
 		}
 	}
 	fclose(img);
