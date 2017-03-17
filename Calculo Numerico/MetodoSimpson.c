@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-/* Aplicações Múltiplas da Regra de 1/3 de Simpson */
+/* Aplica��es M�ltiplas da Regra de 1/3 de Simpson */
 
 void MetodoSimpson(int segmentos, float limiteSuperior, float limiteInferior);
 void area(float altura, float limiteInferior, float limiteSuperior, float somaPares, float somaImpares, int segmentos);
@@ -11,7 +11,7 @@ void erro(float limiteInferior, float limiteSuperior, int segmentos);
 
 
 int main() {
-	printf("\n\n\n\n\nMetodo de 1/3 de Simpson\n");
+	printf("\n\nMetodo de 1/3 de Simpson\n");
 	MetodoSimpson(4, 0.8, 0);
 	return 0;
 }
@@ -21,13 +21,9 @@ void MetodoSimpson(int segmentos, float limiteSuperior, float limiteInferior) {
 	float somaPares, somaImpares, altura, pontoAtual;
 	int i;
 
-	if (segmentos == 0) {
-		printf("\nDivisão por zero"); //numero de segmentos não pode ser zero
+	if (segmentos <= 0) {
+		printf("\nInv�lido"); //numero de segmentos n�o pode ser zero ou negativo
 	}
-	else {
-		if (segmentos < 0) {
-			printf("\nInvalido"); //também não pode ser negativo
-		}
 		else {
 			if (segmentos % 2 != 0) segmentos = segmentos + 1; // O numero de segmentos deve ser par
 
@@ -48,7 +44,6 @@ void MetodoSimpson(int segmentos, float limiteSuperior, float limiteInferior) {
 
 			area(altura, limiteInferior, limiteSuperior, somaPares, somaImpares, segmentos); //chama a funçao para cálcular a integral, utilizando a funçao do método
 		}
-	}
 }
 
 void area(float altura, float limiteInferior, float limiteSuperior, float somaPares, float somaImpares, int segmentos) { //cálculo da integral a partir do método de simpson
